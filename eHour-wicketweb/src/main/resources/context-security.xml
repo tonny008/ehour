@@ -17,13 +17,14 @@
 	</bean>
 
 	<sec:authentication-manager alias="authenticationManager">
-		<sec:authentication-provider
-			user-service-ref="authService">
-			<sec:password-encoder ref="passwordEncoder">
-				<sec:salt-source user-property="getSalt" />
-			</sec:password-encoder>
+		<sec:authentication-provider ref="testProvider">
 		</sec:authentication-provider>
 	</sec:authentication-manager>
+
+	<bean id="testProvider" class="net.rrm.ehour.ui.common.authorization.Test">
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="userDetailsService" ref="authService" />
+	</bean>
 
 	<bean id="passwordEncoder"
 		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />

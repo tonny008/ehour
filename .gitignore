@@ -1,6 +1,10 @@
 ./dist/
 .idea
 */target
+.settings
+.project
+.classpath
+.vscode
 *.iml
 derby.log
 atlassian-ide-plugin.xml
