@@ -16,20 +16,31 @@
 
 package net.rrm.ehour.ui.manage.assignment.form;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import net.rrm.ehour.config.EhourConfig;
+import net.rrm.ehour.domain.ProjectAssignmentRoleType;
+import net.rrm.ehour.domain.ProjectAssignmentType;
+import net.rrm.ehour.project.service.ProjectAssignmentService;
 import net.rrm.ehour.ui.common.component.AjaxFormComponentFeedbackIndicator;
 import net.rrm.ehour.ui.common.component.ValidatingFormComponentAjaxBehavior;
 import net.rrm.ehour.ui.common.session.EhourWebSession;
 import net.rrm.ehour.ui.manage.assignment.AssignmentAdminBackingBean;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.RangeValidator;
 
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Currency;
+import java.util.List;
 
 /**
  * Rate & role
@@ -37,6 +48,8 @@ import java.util.Currency;
 
 public class AssignmentRateRoleFormPartPanel extends Panel {
     private static final long serialVersionUID = -3250880303705076821L;
+    @SpringBean
+    private ProjectAssignmentService projectAssignmentService;
 
     public AssignmentRateRoleFormPartPanel(String id, IModel<AssignmentAdminBackingBean> model) {
         super(id, model);
@@ -44,7 +57,17 @@ public class AssignmentRateRoleFormPartPanel extends Panel {
         EhourConfig config = EhourWebSession.getEhourConfig();
 
         // add role
-        TextField<String> role = new TextField<>("projectAssignment.role");
+        // List<String> roles = Arrays.asList("开发", "测试")
+        List<ProjectAssignmentRoleType> roleTypes = projectAssignmentService.getProjectAssignmentRoleTypes();
+        List<String> roles = Lists.transform(roleTypes, new Function<ProjectAssignmentRoleType, String>() {
+            @Override
+            public String apply(ProjectAssignmentRoleType input) {
+                return input.getRoleType();
+            }
+        });
+
+        final DropDownChoice<String> role = new DropDownChoice<>("projectAssignment.role", roles);
+//        TextField<String> role = new TextField<>("projectAssignment.role");
         add(role);
 
         // add hourly rate

@@ -17,10 +17,7 @@
 package net.rrm.ehour.project.service;
 
 import net.rrm.ehour.data.DateRange;
-import net.rrm.ehour.domain.Project;
-import net.rrm.ehour.domain.ProjectAssignment;
-import net.rrm.ehour.domain.ProjectAssignmentType;
-import net.rrm.ehour.domain.User;
+import net.rrm.ehour.domain.*;
 import net.rrm.ehour.exception.ObjectNotFoundException;
 
 import java.util.List;
@@ -76,4 +73,8 @@ public interface ProjectAssignmentService {
      * @return
      */
     List<ProjectAssignmentType> getProjectAssignmentTypes();
+
+
+    List<ProjectAssignmentRoleType> getProjectAssignmentRoleTypes();
+
 }

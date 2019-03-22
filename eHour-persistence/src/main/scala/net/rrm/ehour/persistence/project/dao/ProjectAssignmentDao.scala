@@ -45,6 +45,7 @@ trait ProjectAssignmentDao extends GenericDao[Integer, ProjectAssignment] {
    */
   def findProjectAssignmentTypes(): util.List[ProjectAssignmentType]
 
+  def findProjectAssignmentRoleTypes(): util.List[ProjectAssignmentRoleType]
   /**
    * Find all project assignments for project
    */

@@ -19,10 +19,7 @@ package net.rrm.ehour.project.service;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.rrm.ehour.data.DateRange;
-import net.rrm.ehour.domain.Project;
-import net.rrm.ehour.domain.ProjectAssignment;
-import net.rrm.ehour.domain.ProjectAssignmentType;
-import net.rrm.ehour.domain.User;
+import net.rrm.ehour.domain.*;
 import net.rrm.ehour.exception.ObjectNotFoundException;
 import net.rrm.ehour.persistence.project.dao.ProjectAssignmentDao;
 import net.rrm.ehour.persistence.report.dao.ReportAggregatedDao;
@@ -123,5 +120,10 @@ public class ProjectAssignmentServiceImpl implements ProjectAssignmentService {
     @Transactional(readOnly = true)
     public List<ProjectAssignmentType> getProjectAssignmentTypes() {
         return projectAssignmentDAO.findProjectAssignmentTypes();
+    }
+
+    @Override
+    public List<ProjectAssignmentRoleType> getProjectAssignmentRoleTypes() {
+        return projectAssignmentDAO.findProjectAssignmentRoleTypes();
     }
 }

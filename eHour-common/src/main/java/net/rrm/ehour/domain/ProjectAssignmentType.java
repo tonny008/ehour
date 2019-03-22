@@ -47,9 +47,9 @@ public class ProjectAssignmentType extends DomainObject<Integer, ProjectAssignme
 	
 	public ProjectAssignmentType()
 	{
-		
+
 	}
-	
+
 	public ProjectAssignmentType(Integer assignmentTypeId)
 	{
 		this.assignmentTypeId = assignmentTypeId;
