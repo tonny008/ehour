@@ -4,3 +4,9 @@ Building eHour
 To start eHour from your IDE, create an environment variable EHOUR_HOME and point it to
 eHour-standalone/src/test/resources
 Now run the EhourServerRunner (in the eHour-standalone module) to start your server.
+
+
+
+docker run -it -p 80:8080 --name ehour --link ehour-mysql:mysql ehour
+
+docker run --name ehour-mysql -e MYSQL_ROOT_PASSWORD=ehour -d mysql-alpine

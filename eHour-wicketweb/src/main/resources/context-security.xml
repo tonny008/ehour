@@ -17,11 +17,11 @@
 	</bean>
 
 	<sec:authentication-manager alias="authenticationManager">
-		<sec:authentication-provider ref="testProvider">
+		<sec:authentication-provider ref="ldapProvider">
 		</sec:authentication-provider>
 	</sec:authentication-manager>
 
-	<bean id="testProvider" class="net.rrm.ehour.ui.common.authorization.Test">
+	<bean id="ldapProvider" class="net.rrm.ehour.ui.common.authorization.LdapDaoAuthenticationProvider">
 		<property name="passwordEncoder" ref="passwordEncoder" />
 		<property name="userDetailsService" ref="authService" />
 	</bean>

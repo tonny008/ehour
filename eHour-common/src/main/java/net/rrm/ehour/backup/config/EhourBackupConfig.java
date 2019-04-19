@@ -17,6 +17,7 @@ public class EhourBackupConfig implements BackupConfig {
     private static final BackupEntityType customer = new BackupEntityType(Customer.class, "CUSTOMER", 3);
     private static final BackupEntityType project = new BackupEntityType(Project.class, "PROJECT", 4);
     private static final BackupEntityType projectAssignmentType = new BackupEntityType(ProjectAssignmentType.class, "PROJECT_ASSIGNMENT_TYPE", 5);
+    private static final BackupEntityType projectAssignmentRoleType = new BackupEntityType(ProjectAssignmentRoleType.class, "PROJECT_ASSIGNMENT_ROLE_TYPE", 20);
     private static final BackupEntityType projectAssignment = new BackupEntityType(ProjectAssignment.class, "PROJECT_ASSIGNMENT", 6);
     private static final BackupEntityType timesheetEntry = new BackupEntityType(TimesheetEntry.class, "TIMESHEET_ENTRY", "TIMESHEET_ENTRIES", new TimesheetEntryRowProcessor(), 7);
     private static final BackupEntityType timesheetComment = new BackupEntityType(TimesheetComment.class, "TIMESHEET_COMMENT", 8);
@@ -27,7 +28,7 @@ public class EhourBackupConfig implements BackupConfig {
 
     private static final List<BackupEntityType> ENTITIES = Lists.newArrayList(userDepartment, userRole, users,
                                                                             customer, project, projectAssignmentType, projectAssignment,
-                                                                            timesheetEntry, timesheetComment, timesheetLock);
+                                                                            timesheetEntry, timesheetComment, timesheetLock, projectAssignmentRoleType);
 
     private static final List<BackupEntityType> REVERSE_ORDER;
 

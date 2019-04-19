@@ -44,6 +44,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.eclipse.jetty.aggregate</groupId>
+            <artifactId>jetty-all</artifactId>
+            <version>8.1.21.v20160908</version>
+        </dependency>
+        <dependency>
             <groupId>net.rrm.ehour</groupId>
             <artifactId>eHour-jetty</artifactId>
         </dependency>

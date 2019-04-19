@@ -29,7 +29,7 @@ public class CustomerComparator implements Comparator<Customer> {
     private Sort sort;
 
     public CustomerComparator() {
-        this(Sort.NAME);
+        this(Sort.CODE);
     }
 
     public CustomerComparator(Sort sort) {
