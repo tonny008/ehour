@@ -25,9 +25,9 @@ public class CustomerComparatorTest {
     @Test
     public void testCompare() {
         Customer c1 = new Customer();
-        c1.setName("aa");
+        c1.setCode("aa");
         Customer c2 = new Customer();
-        c2.setName("bb");
+        c2.setCode("bb");
 
         assertEquals(-1, new CustomerComparator().compare(c1, c2));
     }

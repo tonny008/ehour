@@ -49,7 +49,7 @@ class ReminderServiceSpec extends AbstractSpec {
 
       val body = subject.enrichMailBody(user)
 
-      body should be("hello a b")
+      body should be("hello " + user.getFullName)
     }
   }  
 }
