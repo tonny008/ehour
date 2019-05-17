@@ -25,7 +25,7 @@ class UserChartGeneratorTest extends FunSuite with Matchers with BeforeAndAfter 
   }
 
   test("should have x axis with users") {
-    chart should include("""xAxis:[{"categories":["Edeling, Rosalie","Edeling, Thies"]}]""")
+    chart should include("""xAxis:[{"categories":["EdelingRosalie","EdelingThies"]}]""")
   }
 
   test("should have two y axises with hours and formatted turnover") {

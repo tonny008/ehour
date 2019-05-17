@@ -16,10 +16,14 @@
 
 package net.rrm.ehour.ui.report.detailed.node;
 
+import net.rrm.ehour.domain.UserDepartment;
+import net.rrm.ehour.exception.ObjectNotFoundException;
 import net.rrm.ehour.report.reports.element.FlatReportElement;
 import net.rrm.ehour.report.reports.element.ReportElement;
 import net.rrm.ehour.ui.report.model.ReportNode;
+import net.rrm.ehour.user.service.UserService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 
@@ -30,9 +34,12 @@ import java.io.Serializable;
 public class FlatUserNode extends ReportNode {
     private static final long serialVersionUID = 7854152602780377915L;
 
+    @Autowired
+    UserService userService;
+
     public FlatUserNode(FlatReportElement element) {
         super(element.getUserId(), element.isEmptyEntry());
-        this.columnValues = new String[]{getFullName(element)};
+        this.columnValues = new String[]{getFullName(element), getDepartment(element)};
     }
 
     @Override
@@ -49,9 +56,9 @@ public class FlatUserNode extends ReportNode {
         if (!StringUtils.isBlank(lastName)) {
             fullName.append(lastName);
 
-            if (!StringUtils.isBlank(firstName)) {
-                fullName.append(", ");
-            }
+//            if (!StringUtils.isBlank(firstName)) {
+//                fullName.append(", ");
+//            }
         }
 
         if (!StringUtils.isBlank(firstName)) {
@@ -60,4 +67,8 @@ public class FlatUserNode extends ReportNode {
 
         return fullName.toString();
     }
+    private String getDepartment(FlatReportElement element) {
+        return element.getUserDepartment();
+    }
+
 }

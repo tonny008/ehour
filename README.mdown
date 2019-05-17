@@ -8,3 +8,11 @@ Building eHour
 
 For build instructions, check https://wiki.ehour.nl/display/DOCU/Build+from+source
 
+
+# 1.4.4 配置修改
+ /opt/ehour/resources/i18n/EhourProperties
+增加
+userReport.report.department=Department
+修改
+login.login.header
+*.title properties  eHour -> CS Hour

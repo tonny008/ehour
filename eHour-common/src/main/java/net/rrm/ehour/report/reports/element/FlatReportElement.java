@@ -39,6 +39,7 @@ public class FlatReportElement implements ProjectStructuredReportElement {
     private Integer userId;
     private String userLastName;
     private String userFirstName;
+    private String userDepartment;
     private Integer projectId;
     private String projectName;
     private String projectCode;
@@ -218,6 +219,16 @@ public class FlatReportElement implements ProjectStructuredReportElement {
         this.userLastName = userLastName;
     }
 
+
+    public void setUserDepartment(String userDepartment) {
+        this.userDepartment = userDepartment;
+    }
+
+    public String getUserDepartment() {
+        return userDepartment;
+    }
+
+
     /**
      * @return the entryDate
      */
@@ -324,7 +335,7 @@ public class FlatReportElement implements ProjectStructuredReportElement {
     }
 
     /**
-     * @see java.lang.Object#equals(Object)
+     * @see Object#equals(Object)
      */
     public boolean equals(Object object) {
         if (!(object instanceof FlatReportElement)) {
@@ -343,7 +354,7 @@ public class FlatReportElement implements ProjectStructuredReportElement {
     }
 
     /**
-     * @see java.lang.Object#hashCode()
+     * @see Object#hashCode()
      */
     public int hashCode() {
         return new HashCodeBuilder()
@@ -391,4 +402,5 @@ public class FlatReportElement implements ProjectStructuredReportElement {
     public void setDisplayOrder(Integer displayOrder) {
         this.displayOrder = displayOrder;
     }
+
 }

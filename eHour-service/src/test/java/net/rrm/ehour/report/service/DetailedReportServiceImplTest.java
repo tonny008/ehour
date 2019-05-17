@@ -28,6 +28,7 @@ import net.rrm.ehour.report.reports.ReportData;
 import net.rrm.ehour.report.reports.element.FlatReportElement;
 import net.rrm.ehour.report.reports.element.FlatReportElementBuilder;
 import net.rrm.ehour.timesheet.service.TimesheetLockService;
+import net.rrm.ehour.user.service.UserService;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.junit.Before;
@@ -58,6 +59,7 @@ public class DetailedReportServiceImplTest {
     private TimesheetLockService timesheetLockService;
     private ProjectDao projectDao;
     private ReportAggregatedDao reportAggregatedDao;
+    private UserService userService;
 
     @Before
     public void setUp() throws Exception {
@@ -74,7 +76,9 @@ public class DetailedReportServiceImplTest {
 
         reportAggregatedDao = mock(ReportAggregatedDao.class);
 
-        detailedReportService = new DetailedReportServiceImpl(reportCriteriaService, projectDao, timesheetLockService, detailedReportDao, reportAggregatedDao);
+        userService = mock(UserService.class);
+
+        detailedReportService = new DetailedReportServiceImpl(reportCriteriaService, projectDao, timesheetLockService, detailedReportDao, reportAggregatedDao, userService);
     }
 
     private void provideNoLocks() {

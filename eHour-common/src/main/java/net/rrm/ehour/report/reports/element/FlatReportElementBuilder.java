@@ -33,6 +33,7 @@ public class FlatReportElementBuilder {
         element.setUserId(user.getUserId());
         element.setUserFirstName(user.getFirstName());
         element.setUserLastName(user.getLastName());
+        element.setUserDepartment(user.getUserDepartment() == null ? "无部门" : user.getUserDepartment().getName());
 
         element.setDisplayOrder(1);
 

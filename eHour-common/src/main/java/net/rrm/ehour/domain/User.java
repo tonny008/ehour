@@ -150,9 +150,9 @@ public class User extends DomainObject<Integer, User> {
         if (!StringUtils.isBlank(lastName)) {
             fullName.append(lastName);
 
-            if (!StringUtils.isBlank(firstName)) {
-                fullName.append(", ");
-            }
+//            if (!StringUtils.isBlank(firstName)) {
+//                fullName.append(", ");
+//            }
         }
 
         if (!StringUtils.isBlank(firstName)) {

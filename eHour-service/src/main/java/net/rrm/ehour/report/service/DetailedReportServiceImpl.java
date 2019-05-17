@@ -17,10 +17,13 @@
 package net.rrm.ehour.report.service;
 
 import com.google.common.collect.Lists;
+import net.rrm.ehour.config.TranslationDiscovery;
 import net.rrm.ehour.data.DateRange;
 import net.rrm.ehour.domain.Project;
 import net.rrm.ehour.domain.ProjectAssignment;
 import net.rrm.ehour.domain.User;
+import net.rrm.ehour.domain.UserDepartment;
+import net.rrm.ehour.exception.ObjectNotFoundException;
 import net.rrm.ehour.persistence.project.dao.ProjectDao;
 import net.rrm.ehour.persistence.report.dao.DetailedReportDao;
 import net.rrm.ehour.persistence.report.dao.ReportAggregatedDao;
@@ -30,7 +33,9 @@ import net.rrm.ehour.report.reports.element.FlatReportElement;
 import net.rrm.ehour.report.reports.element.FlatReportElementBuilder;
 import net.rrm.ehour.report.reports.element.LockableDate;
 import net.rrm.ehour.timesheet.service.TimesheetLockService;
+import net.rrm.ehour.user.service.UserService;
 import net.rrm.ehour.util.DomainUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,15 +47,19 @@ import java.util.List;
  */
 @Service("detailedReportService")
 public class DetailedReportServiceImpl extends AbstractReportServiceImpl<FlatReportElement> implements DetailedReportService {
+    private static final Logger LOG = Logger.getLogger(DetailedReportServiceImpl.class);
+
     private DetailedReportDao detailedReportDao;
+    private UserService userService;
 
     DetailedReportServiceImpl() {
     }
 
     @Autowired
-    public DetailedReportServiceImpl(ReportCriteriaService reportCriteriaService, ProjectDao projectDao, TimesheetLockService lockService, DetailedReportDao detailedReportDao, ReportAggregatedDao reportAggregatedDAO) {
+    public DetailedReportServiceImpl(ReportCriteriaService reportCriteriaService, ProjectDao projectDao, TimesheetLockService lockService, DetailedReportDao detailedReportDao, ReportAggregatedDao reportAggregatedDAO, UserService userService) {
         super(reportCriteriaService, projectDao, lockService, reportAggregatedDAO);
         this.detailedReportDao = detailedReportDao;
+        this.userService = userService;
     }
 
     public ReportData getDetailedReportData(ReportCriteria reportCriteria) {
@@ -71,6 +80,14 @@ public class DetailedReportServiceImpl extends AbstractReportServiceImpl<FlatRep
         for (FlatReportElement element : elements) {
             Date date = element.getDayDate();
             element.setLockableDate(new LockableDate(date, lockedDates.contains(date)));
+            UserDepartment dept = null;
+            try {
+                User user = userService.getUser(element.getUserId());
+                dept = user.getUserDepartment();
+            } catch (Exception e) {
+                LOG.info("找不到Department for id: " + element.getUserId() ); // leave department blank if not found
+            }
+            element.setUserDepartment(dept == null ? "无部门" : dept.getName());
         }
 
         if (showZeroBookings) {
@@ -90,6 +107,15 @@ public class DetailedReportServiceImpl extends AbstractReportServiceImpl<FlatRep
         List<FlatReportElement> elements = Lists.newArrayList();
 
         for (ProjectAssignment assignment : assignments) {
+            try {
+                if(null != assignment.getUser()) {
+                    assignment.getUser().setUserDepartment(userService.getUserDepartment(assignment.getUser().getUserId()));
+                } else {
+                    LOG.info("assignment no user");
+                }
+            } catch (ObjectNotFoundException e) {
+                LOG.info("找不到Department"); // leave department blank if not found
+            }
             elements.add(FlatReportElementBuilder.buildFlatReportElement(assignment));
         }
 
