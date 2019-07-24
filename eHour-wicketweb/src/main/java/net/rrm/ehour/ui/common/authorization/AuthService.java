@@ -55,7 +55,7 @@ public class AuthService implements UserDetailsService {
     /**
      * Get user by username (acegi)
      *
-     * @param username
+     * @param username username
      */
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -92,23 +92,23 @@ public class AuthService implements UserDetailsService {
                         user.setFirstName(name.substring(1));
                         user.setLastName(name.substring(0, 1)); // 不考虑复姓
                     }
+                    user.setEmail(username + LdapDaoAuthenticationProvider.EMAIL_SUFFIX);
+                    Set<UserRole> roles = new HashSet<>();
+                    roles.add(UserRole.USER);
+                    user.setUserRoles(roles);
+                    user.setActive(true);
+                    try {
+                        userService.persistNewUser(user, "password");
+                    } catch (ObjectNotUniqueException e) {
+                        e.printStackTrace();
+                    }
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            user.setEmail(username + LdapDaoAuthenticationProvider.EMAIL_SUFFIX);
-            Set<UserRole> roles = new HashSet<>();
-            roles.add(UserRole.USER);
-            user.setUserRoles(roles);
-            user.setActive(true);
-            try {
-                userService.persistNewUser(user, "password");
-            } catch (ObjectNotUniqueException e) {
-                e.printStackTrace();
-            }
         }
 
-        if (user == null || !user.isActive()) {
+        if (!user.isActive()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Load user by username for " + username + " but user unknown or inactive");
             }
@@ -121,8 +121,8 @@ public class AuthService implements UserDetailsService {
         return authUser;
     }
 
-    public static void main(String[] args) throws Exception {
-        Hashtable<String, String> ldapEnv = new Hashtable<String, String>(11);
+    public static void main(String[] args) {
+        Hashtable<String, String> ldapEnv = new Hashtable<>(11);
         ldapEnv.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         //ldapEnv.put(Context.PROVIDER_URL,  "ldap://societe.fr:389");
         ldapEnv.put(Context.PROVIDER_URL, "ldap://10.100.11.11:389");

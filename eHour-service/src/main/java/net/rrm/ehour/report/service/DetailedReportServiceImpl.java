@@ -107,15 +107,6 @@ public class DetailedReportServiceImpl extends AbstractReportServiceImpl<FlatRep
         List<FlatReportElement> elements = Lists.newArrayList();
 
         for (ProjectAssignment assignment : assignments) {
-            try {
-                if(null != assignment.getUser()) {
-                    assignment.getUser().setUserDepartment(userService.getUserDepartment(assignment.getUser().getUserId()));
-                } else {
-                    LOG.info("assignment no user");
-                }
-            } catch (ObjectNotFoundException e) {
-                LOG.info("找不到Department"); // leave department blank if not found
-            }
             elements.add(FlatReportElementBuilder.buildFlatReportElement(assignment));
         }
 

@@ -66,6 +66,7 @@ public class FlatReportElement implements ProjectStructuredReportElement {
         userId = clone.userId;
         userLastName = clone.userLastName;
         userFirstName = clone.userFirstName;
+        userDepartment = clone.userDepartment;
         projectId = clone.projectId;
         projectName = clone.projectName;
         projectCode = clone.projectCode;
